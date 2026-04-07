@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Springer Engineering Business Experience Certificate — Course Planner</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;600;700&family=Barlow+Condensed:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --pu-black:    #000000;
+      --pu-gold:     #CFB991;
+      --pu-aged:     #8E6F3E;
+      --pu-rush:     #DAAA00;
+      --pu-field:    #DDB945;
+      --pu-dust:     #EBD99F;
+      --pu-steel:    #555960;
+      --pu-cool:     #6F727B;
+      --pu-railway:  #9D9795;
+      --pu-steam:    #C4BFC0;
+      --pu-white:    #FFFFFF;
+      --bg-page:     #F7F5F0;
+      --bg-panel:    #FFFFFF;
+      --bg-tint:     #F4F1EC;
+      --border-soft: rgba(142,111,62,0.18);
+      --border-rule: #E5E0D8;
+      --text-main:   #1a1a1a;
+      --text-muted:  #6F727B;
+      --green:       #27ae60;
+      --yellow:      #DAAA00;
+      --tracker-w:   268px;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg-page);
+      color: var(--text-main);
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Layout ───────────────────────────────────────────── */
+    .page-wrapper {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 32px 80px calc(var(--tracker-w) + 48px);
+    }
+
+    /* ── Hero ─────────────────────────────────────────────── */
+    .hero-banner {
+      background: var(--pu-black);
+      border-bottom: 3px solid var(--pu-gold);
+      padding: 48px 0 36px;
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-banner::after {
+      content: '';
+      position: absolute;
+      top: 0; right: -60px;
+      width: 55%; height: 100%;
+      background: linear-gradient(103deg, transparent 38%, rgba(207,185,145,0.09) 38%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 32px 0 calc(var(--tracker-w) + 48px);
+    }
+    .hero-overline {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--pu-aged);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hero-overline::before {
+      content: '';
+      display: inline-block;
+      width: 24px; height: 2px;
+      background: var(--pu-rush);
+    }
+    .hero-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.05;
+      color: var(--pu-white);
+      letter-spacing: -0.01em;
+      margin-bottom: 14px;
+    }
+    .hero-title span { color: var(--pu-gold); }
+    .hero-sub {
+      font-size: 0.95rem;
+      color: var(--pu-railway);
+      max-width: 540px;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .req-pills { display: flex; flex-wrap: wrap; gap: 7px; }
+    .req-pill {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.63rem;
+      letter-spacing: 0.05em;
+      padding: 4px 10px;
+      border: 1px solid rgba(207,185,145,0.25);
+      border-radius: 2px;
+      color: var(--pu-railway);
+      background: rgba(207,185,145,0.08);
+    }
+    .req-pill strong { color: var(--pu-gold); }
+
+    /* ── Cert Section (collapsible) ───────────────────────── */
+    .cert-section {
+      margin-bottom: 8px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border-soft);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+    .cert-section:hover { box-shadow: 0 2px 14px rgba(0,0,0,0.06); }
+    .cert-section.is-complete {
+      border-color: rgba(39,174,96,0.3);
+      box-shadow: 0 2px 12px rgba(39,174,96,0.07);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 22px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.2s;
+    }
+    .section-header:hover { background: var(--bg-tint); }
+    .section-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--pu-aged);
+      letter-spacing: 0.12em;
+      white-space: nowrap;
+      min-width: 32px;
+    }
+    .section-title-wrap { flex: 1; min-width: 0; }
+    .section-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-main);
+      margin: 0;
+      line-height: 1.2;
+    }
+    .section-subtitle {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      margin-top: 3px;
+    }
+    .section-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.06em;
+      padding: 3px 9px;
+      border-radius: 2px;
+      border: 1px solid var(--border-rule);
+      color: var(--text-muted);
+      background: var(--bg-tint);
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: all 0.3s;
+    }
+    .section-chip.chip-done {
+      border-color: rgba(39,174,96,0.45);
+      color: var(--green);
+      background: rgba(39,174,96,0.06);
+    }
+    .section-chip.chip-req {
+      border-color: rgba(142,111,62,0.4);
+      color: var(--pu-aged);
+      background: rgba(142,111,62,0.07);
+    }
+    .chip-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: currentColor;
+      flex-shrink: 0;
+    }
+    .section-chevron {
+      font-size: 0.85rem;
+      color: var(--pu-railway);
+      transition: transform 0.25s;
+      flex-shrink: 0;
+    }
+    .cert-section.open .section-chevron { transform: rotate(180deg); }
+
+    .section-body {
+      display: none;
+      padding: 0 22px 24px;
+      border-top: 1px solid var(--border-rule);
+    }
+    .cert-section.open .section-body { display: block; }
+
+    .section-instruction {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.67rem;
+      color: var(--text-muted);
+      letter-spacing: 0.03em;
+      line-height: 1.65;
+      padding: 14px 0 18px;
+    }
+    .section-instruction .target { color: var(--pu-aged); font-weight: 700; }
+
+    /* ── Course Cards ──────────────────────────────────────── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 10px;
+    }
+    .cards-stack { display: flex; flex-direction: column; gap: 10px; }
+
+    .course-card {
+      background: var(--bg-panel);
+      border: 1.5px solid var(--border-soft);
+      border-radius: 4px;
+      padding: 16px 18px;
+      cursor: pointer;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .course-card:hover:not(.card-required):not(.card-greyed) {
+      border-color: var(--pu-aged);
+      box-shadow: 0 3px 12px rgba(142,111,62,0.12);
+    }
+    .course-card.card-selected {
+      border-color: var(--pu-aged);
+      background: #FBF8F2;
+      box-shadow: 0 2px 10px rgba(142,111,62,0.14);
+    }
+    .course-card.card-required {
+      cursor: default;
+      border-color: rgba(142,111,62,0.35);
+      background: var(--bg-tint);
+    }
+    .course-card.card-greyed {
+      opacity: 0.35;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    /* Radio dot */
+    .card-radio {
+      position: absolute;
+      top: 14px; right: 14px;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      border: 1.5px solid var(--pu-steam);
+      transition: border-color 0.2s;
+    }
+    .course-card.card-selected .card-radio,
+    .course-card.card-required .card-radio { border-color: var(--pu-aged); }
+    .course-card.card-selected .card-radio::after,
+    .course-card.card-required .card-radio::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--pu-aged);
+    }
+
+    .card-req-badge {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--pu-aged);
+      background: rgba(142,111,62,0.1);
+      border: 1px solid rgba(142,111,62,0.25);
+      padding: 2px 7px;
+      border-radius: 2px;
+      margin-bottom: 8px;
+      width: fit-content;
+    }
+
+    .card-id {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--pu-aged);
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+      padding-right: 26px;
+    }
+    .card-name {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 600;
+      font-size: 0.97rem;
+      color: var(--text-main);
+      line-height: 1.3;
+      margin-bottom: 10px;
+      padding-right: 26px;
+    }
+    .card-meta { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
+    .cbadge {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.03em;
+      padding: 2px 7px;
+      border-radius: 2px;
+    }
+    .cb-credits { background:#F0EDE7; color:var(--pu-steel); border:1px solid var(--border-rule); }
+    .cb-fall    { background:#FEF3E2; color:#A06500;          border:1px solid rgba(218,170,0,.25); }
+    .cb-spring  { background:#E8F4EC; color:#2A6E3F;          border:1px solid rgba(39,174,96,.25); }
+    .cb-anytime { background:#EEF0F4; color:var(--pu-cool);   border:1px solid var(--border-rule); }
+    .cb-prof    { background:#F0EDE7; color:var(--pu-cool);   border:1px solid var(--border-rule); }
+
+    .card-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin: 0;
+      flex: 1;
+    }
+    .card-desc.collapsed {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-toggle {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.63rem;
+      color: var(--pu-aged);
+      background: none;
+      border: none;
+      padding: 6px 0 0;
+      cursor: pointer;
+      letter-spacing: 0.03em;
+      text-align: left;
+    }
+    .card-toggle:hover { text-decoration: underline; }
+
+    /* ── Acknowledge block ─────────────────────────────────── */
+    .ack-block {
+      border: 1.5px dashed var(--border-soft);
+      border-radius: 4px;
+      padding: 20px 22px;
+      background: var(--bg-tint);
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .ack-block.ack-done {
+      border-color: rgba(39,174,96,0.4);
+      border-style: solid;
+      background: rgba(39,174,96,0.04);
+    }
+    .ack-icon { font-size: 1.6rem; color: var(--pu-gold); flex-shrink: 0; margin-top: 2px; }
+    .ack-body { flex: 1; }
+    .ack-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+    .ack-desc { font-size: 0.83rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 12px; }
+    .ack-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.83rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .ack-label input[type="checkbox"] { accent-color: var(--pu-aged); width:16px; height:16px; cursor:pointer; }
+
+    /* ── Floating Tracker ──────────────────────────────────── */
+    #tracker {
+      position: fixed;
+      top: 28px; left: 24px;
+      width: var(--tracker-w);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-height: calc(100vh - 48px);
+      overflow-y: auto;
+      scrollbar-width: none;
+    }
+    #tracker::-webkit-scrollbar { display: none; }
+
+    .tracker-hdr {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--pu-aged);
+      padding: 0 2px 8px;
+      border-bottom: 2px solid var(--pu-gold);
+      margin-bottom: 2px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .t-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--pu-rush);
+      animation: blink 2s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+    .tcard {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-soft);
+      border-radius: 3px;
+      padding: 11px 12px 10px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.06);
+      transition: border-color 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    .tcard:hover { border-color: var(--pu-aged); }
+    .tcard::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--pu-steam);
+      transition: background 0.35s;
+    }
+    .tcard.ty::before  { background: var(--yellow); }
+    .tcard.tg::before  { background: var(--green); }
+    .tcard.tg { border-color: rgba(39,174,96,0.3); box-shadow: 0 2px 8px rgba(39,174,96,0.09); }
+
+    .tcard-lbl {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+      line-height: 1.45;
+    }
+    .tcard-sel {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.53rem;
+      color: var(--pu-aged);
+      letter-spacing: 0.03em;
+      margin-bottom: 7px;
+      line-height: 1.4;
+      min-height: 14px;
+    }
+    .tcard-tally { display: flex; align-items: baseline; gap: 4px; margin-bottom: 7px; }
+    .t-n {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1;
+      transition: color 0.3s;
+    }
+    .tcard.tg .t-n { color: var(--green); }
+    .t-denom { font-family: 'Space Mono', monospace; font-size: 0.68rem; color: var(--text-muted); }
+    .tcard-bar-wrap { height: 3px; background: var(--border-rule); border-radius: 2px; overflow: hidden; margin-bottom: 6px; }
+    .tcard-bar {
+      height: 100%; border-radius: 2px;
+      background: var(--pu-steam);
+      width: 0%;
+      transition: width 0.4s cubic-bezier(0.22,1,0.36,1), background 0.4s;
+    }
+    .tcard-bar.by { background: var(--yellow); }
+    .tcard-bar.bg { background: var(--green); }
+    .tcard-stat {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+    .tcard.tg .tcard-stat { color: var(--green); }
+    .tcard-check {
+      position: absolute;
+      top: 9px; right: 9px;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(0.4);
+      transition: opacity 0.3s, transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .tcard-check i { font-size: 0.52rem; color: white; }
+    .tcard.tg .tcard-check { opacity: 1; transform: scale(1); }
+
+    .tcard-total { background: var(--bg-tint); margin-top: 2px; }
+    .tcard-total.tg { background: rgba(39,174,96,0.05); border-color: rgba(39,174,96,0.35); }
+
+    .btn-print {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 9px 16px;
+      background: var(--pu-black);
+      color: var(--pu-gold);
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      margin-top: 4px;
+      transition: background 0.2s, color 0.2s;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+    .btn-print.ready { opacity: 1; pointer-events: auto; }
+    .btn-print.ready:hover { background: var(--pu-aged); color: var(--pu-white); }
+
+    .btn-reset {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.05em;
+      padding: 7px 14px;
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border-soft);
+      border-radius: 3px;
+      cursor: pointer;
+      width: 100%;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-reset:hover { color: var(--text-main); border-color: var(--pu-aged); }
+
+    /* ── Print styles ──────────────────────────────────────── */
+    #print-summary { display: none; }
+    @media print {
+      #tracker, .page-wrapper, .hero-banner { display: none !important; }
+      #print-summary { display: block !important; }
+      body { background:#fff !important; color:#000 !important; font-family:'Barlow',Arial,sans-serif; font-size:10pt; }
+      .ps-hdr { padding-bottom:14pt; margin-bottom:18pt; border-bottom:3pt solid #CFB991; }
+      .ps-inst { font-size:7pt; letter-spacing:0.25em; text-transform:uppercase; color:#8E6F3E; margin-bottom:4pt; }
+      .ps-prog { font-size:22pt; font-weight:700; letter-spacing:-0.01em; color:#000; line-height:1.05; }
+      .ps-prog span { color:#8E6F3E; }
+      .ps-meta { margin-top:7pt; display:flex; justify-content:space-between; align-items:flex-end; }
+      .ps-doctype { font-size:10pt; font-weight:600; letter-spacing:0.05em; text-transform:uppercase; color:#555960; }
+      .ps-date { font-family:monospace; font-size:7pt; color:#9D9795; }
+      .ps-sec { margin-bottom:14pt; break-inside:avoid; }
+      .ps-sec-ttl { font-size:9pt; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#000; padding-bottom:4pt; border-bottom:1pt solid #CFB991; margin-bottom:7pt; display:flex; justify-content:space-between; align-items:baseline; }
+      .ps-cr { font-family:monospace; font-size:7pt; color:#8E6F3E; font-weight:normal; text-transform:none; }
+      .ps-tbl { width:100%; border-collapse:collapse; font-size:9pt; }
+      .ps-tbl th { font-family:monospace; font-size:6.5pt; letter-spacing:0.1em; text-transform:uppercase; color:#9D9795; padding:2pt 5pt; border-bottom:1pt solid #DDB945; text-align:left; }
+      .ps-tbl td { padding:4pt 5pt; border-bottom:0.5pt solid #f0f0f0; }
+      .ps-tbl td.tc { font-family:monospace; font-size:7.5pt; color:#8E6F3E; white-space:nowrap; }
+      .ps-tbl td.cr { text-align:right; white-space:nowrap; font-family:monospace; font-size:7.5pt; color:#555960; }
+      .ps-totals { margin-top:18pt; padding-top:10pt; border-top:2pt solid #CFB991; display:flex; justify-content:space-between; align-items:baseline; break-inside:avoid; }
+      .ps-tot-lbl { font-size:10pt; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; }
+      .ps-tot-val { font-size:15pt; font-weight:700; color:#8E6F3E; }
+      .ps-footer { margin-top:24pt; padding-top:7pt; border-top:0.5pt solid #ddd; font-family:monospace; font-size:6.5pt; color:#9D9795; display:flex; justify-content:space-between; }
+    }
+
+    /* ── Responsive ────────────────────────────────────────── */
+    @media (max-width: 960px) {
+      :root { --tracker-w: 0px; }
+      .page-wrapper, .hero-inner { padding-left: 16px; padding-right: 16px; }
+      #tracker {
+        position: fixed;
+        bottom:0; top:auto; left:0; right:0;
+        width:100%; max-height:36vh;
+        flex-direction:row; flex-wrap:nowrap;
+        overflow-x:auto; overflow-y:hidden;
+        padding:10px 16px; gap:6px;
+        background:rgba(255,255,255,0.97);
+        backdrop-filter:blur(10px);
+        border-top:2px solid var(--pu-gold);
+        box-shadow:0 -4px 20px rgba(0,0,0,0.1);
+      }
+      .tracker-hdr, .tcard-sel, .btn-print, .btn-reset { display:none; }
+      .tcard { min-width:130px; flex-shrink:0; }
+      body { padding-bottom:200px; }
+      .cards-grid { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ PRINT LAYOUT ══════════════════════════════════════════════ -->
+<div id="print-summary">
+  <div class="ps-hdr">
+    <div class="ps-inst">Purdue University · College of Engineering</div>
+    <div class="ps-prog">Springer Engineering <span>Business Experience</span></div>
+    <div class="ps-meta">
+      <div class="ps-doctype">Plan of Study</div>
+      <div class="ps-date" id="ps-date"></div>
+    </div>
+  </div>
+  <div id="ps-body"></div>
+  <div class="ps-totals">
+    <div class="ps-tot-lbl">Total Certificate Credits</div>
+    <div class="ps-tot-val" id="ps-tot-val">0 cr</div>
+  </div>
+  <div class="ps-footer">
+    <span>Purdue University · Springer Engineering Business Experience Certificate</span>
+    <span id="ps-footer-date"></span>
+  </div>
+</div>
+
+<!-- ══ FLOATING TRACKER ══════════════════════════════════════════ -->
+<div id="tracker">
+  <div class="tracker-hdr"><div class="t-dot"></div>Progress Tracker</div>
+
+  <div class="tcard tg" id="tc-forum" onclick="scrollTo('s-forum')">
+    <div class="tcard-check"><i class="bi bi-check-lg"></i></div>
+    <div class="tcard-lbl">01 — Executive Forum</div>
+    <div class="tcard-sel">ENGR 30301 · Required</div>
+    <div class="tcard-tally">
+      <span class="t-n">2</span>
+      <span class="t-denom">/ 2 cr</span>
+    </div>
+    <div class="tcard-bar-wrap"><div class="tcard-bar bg" style="width:100%"></div></div>
+    <div class="tcard-stat">✓ Required course</div>
+  </div>
+
+  <div class="tcard" id="tc-found" onclick="scrollTo('s-found')">
+    <div class="tcard-check"><i class="bi bi-check-lg"></i></div>
+    <div class="tcard-lbl">02 — Foundational Logic</div>
+    <div class="tcard-sel" id="ts-found">— Not selected</div>
+    <div class="tcard-tally"><span class="t-n" id="tn-found">0</span><span class="t-denom">/ 2 cr</span></div>
+    <div class="tcard-bar-wrap"><div class="tcard-bar" id="tb-found"></div></div>
+    <div class="tcard-stat" id="tst-found">Select one course</div>
+  </div>
+
+  <div class="tcard" id="tc-comm" onclick="scrollTo('s-comm')">
+    <div class="tcard-check"><i class="bi bi-check-lg"></i></div>
+    <div class="tcard-lbl">03 — Communicate &amp; Lead</div>
+    <div class="tcard-sel" id="ts-comm">— Not selected</div>
+    <div class="tcard-tally"><span class="t-n" id="tn-comm">0</span><span class="t-denom">/ 2–3 cr</span></div>
+    <div class="tcard-bar-wrap"><div class="tcard-bar" id="tb-comm"></div></div>
+    <div class="tcard-stat" id="tst-comm">Select one course</div>
+  </div>
+
+  <div class="tcard" id="tc-biz" onclick="scrollTo('s-biz')">
+    <div class="tcard-check"><i class="bi bi-check-lg"></i></div>
+    <div class="tcard-lbl">04 — Business Case</div>
+    <div class="tcard-sel" id="ts-biz">— Not selected</div>
+    <div class="tcard-tally"><span class="t-n" id="tn-biz">0</span><span class="t-denom">/ 3 cr</span></div>
+    <div class="tcard-bar-wrap"><div class="tcard-bar" id="tb-biz"></div></div>
+    <div class="tcard-stat" id="tst-biz">Select one course</div>
+  </div>
+
+  <div class="tcard" id="tc-comp" onclick="scrollTo('s-comp')">
+    <div class="tcard-check"><i class="bi bi-check-lg"></i></div>
+    <div class="tcard-lbl">05 — Competition</div>
+    <div class="tcard-sel" id="ts-comp">— Not selected</div>
+    <div class="tcard-tally"><span class="t-n" id="tn-comp">—</span><span class="t-denom"></span></div>
+    <div class="tcard-bar-wrap"><div class="tcard-bar" id="tb-comp"></div></div>
+    <div class="tcard-stat" id="tst-comp">Select one path</div>
+  </div>
+
+  <div class="tcard" id="tc-port" onclick="scrollTo('s-port')">
+    <div class="tcard-check"><i class="bi bi-check-lg"></i></div>
+    <div class="tcard-lbl">06 — Portfolio</div>
+    <div class="tcard-sel" id="ts-port">— Not acknowledged</div>
+    <div class="tcard-tally"><span class="t-n" id="tn-port">—</span><span class="t-denom"></span></div>
+    <div class="tcard-bar-wrap"><div class="tcard-bar" id="tb-port"></div></div>
+    <div class="tcard-stat" id="tst-port">Acknowledge below</div>
+  </div>
+
+  <div class="tcard tcard-total" id="tc-total">
+    <div class="tcard-check"><i class="bi bi-check-lg"></i></div>
+    <div class="tcard-lbl">Total Credits</div>
+    <div class="tcard-tally"><span class="t-n" id="tn-total">2</span><span class="t-denom">/ 9–10 cr</span></div>
+    <div class="tcard-bar-wrap"><div class="tcard-bar by" id="tb-total" style="width:20%"></div></div>
+    <div class="tcard-stat" id="tst-total">Complete all sections</div>
+  </div>
+
+  <button class="btn-print" id="btn-print" onclick="doPrint()">
+    <i class="bi bi-printer"></i> Print My Plan
+  </button>
+  <button class="btn-reset" onclick="doReset()">
+    <i class="bi bi-arrow-counterclockwise" style="margin-right:4px"></i> Reset All
+  </button>
+</div>
+
+<!-- ══ HERO ══════════════════════════════════════════════════════ -->
+<div class="hero-banner">
+  <div class="hero-inner">
+    <div class="hero-overline">Purdue University · College of Engineering</div>
+    <h1 class="hero-title">Springer Engineering<br><span>Business Experience</span></h1>
+    <p class="hero-sub">Select your courses for each requirement below. Your progress is tracked in real time on the left.</p>
+    <div class="req-pills">
+      <div class="req-pill"><strong>2 cr</strong>&nbsp; Executive Forum</div>
+      <div class="req-pill"><strong>2 cr</strong>&nbsp; Foundational Logic</div>
+      <div class="req-pill"><strong>2–3 cr</strong>&nbsp; Communicate &amp; Lead</div>
+      <div class="req-pill"><strong>3 cr</strong>&nbsp; Business Case</div>
+      <div class="req-pill"><strong>0 cr</strong>&nbsp; Competition</div>
+      <div class="req-pill"><strong>0 cr</strong>&nbsp; Portfolio</div>
+      <div class="req-pill"><strong>9–10 cr</strong>&nbsp; Total</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MAIN ═══════════════════════════════════════════════════════ -->
+<div class="page-wrapper">
+
+  <!-- 01 Executive Forum -->
+  <div class="cert-section open is-complete" id="s-forum">
+    <div class="section-header" onclick="toggleSec('s-forum')">
+      <span class="section-num">01 —</span>
+      <div class="section-title-wrap">
+        <div class="section-title">Springer Engineering Executive Forum</div>
+        <div class="section-subtitle">Required &middot; 2 credits</div>
+      </div>
+      <div class="section-chip chip-req"><span class="chip-dot"></span>Required</div>
+      <i class="bi bi-chevron-down section-chevron"></i>
+    </div>
+    <div class="section-body">
+      <div class="section-instruction">
+        This course is <span class="target">required</span> for all certificate students and is automatically included in your plan.
+      </div>
+      <div class="cards-grid">
+        <div class="course-card card-required">
+          <div class="card-radio"></div>
+          <div class="card-req-badge">Required</div>
+          <div class="card-id">ENGR 30301</div>
+          <div class="card-name">Springer Engineering Executive Forum</div>
+          <div class="card-meta">
+            <span class="cbadge cb-credits">2 Credits</span>
+            <span class="cbadge cb-fall">Fall 2026</span>
+            <span class="cbadge cb-spring">Spring 2027</span>
+            <span class="cbadge cb-prof">Professor TBD</span>
+          </div>
+          <p class="card-desc collapsed" id="desc-forum">A bi-weekly forum where accomplished engineering alumni — now executives across tech, finance, consulting, and more — share the real story behind their careers. Candid conversations, in-class market simulations, and direct engagement with leaders who have made the jump from engineering to business. You'll leave able to read financial statements, identify executive career pathways, and ask sharper questions about decisions and tradeoffs.</p>
+          <button class="card-toggle" onclick="event.stopPropagation(); toggleDesc('desc-forum', this)">Read more</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 Foundational Logic -->
+  <div class="cert-section open" id="s-found">
+    <div class="section-header" onclick="toggleSec('s-found')">
+      <span class="section-num">02 —</span>
+      <div class="section-title-wrap">
+        <div class="section-title">Business of Engineering Foundational Logic</div>
+        <div class="section-subtitle">Choose one &middot; 2 credits</div>
+      </div>
+      <div class="section-chip" id="chip-found"><span class="chip-dot"></span>Not selected</div>
+      <i class="bi bi-chevron-down section-chevron"></i>
+    </div>
+    <div class="section-body">
+      <div class="section-instruction">
+        Choose <span class="target">one course</span> to build the financial fluency every engineering leader needs.
+      </div>
+      <div class="cards-grid" id="grid-found"></div>
+    </div>
+  </div>
+
+  <!-- 03 Communicate & Lead -->
+  <div class="cert-section open" id="s-comm">
+    <div class="section-header" onclick="toggleSec('s-comm')">
+      <span class="section-num">03 —</span>
+      <div class="section-title-wrap">
+        <div class="section-title">Communicating &amp; Leading Self and Teams</div>
+        <div class="section-subtitle">Choose one &middot; 2–3 credits</div>
+      </div>
+      <div class="section-chip" id="chip-comm"><span class="chip-dot"></span>Not selected</div>
+      <i class="bi bi-chevron-down section-chevron"></i>
+    </div>
+    <div class="section-body">
+      <div class="section-instruction">
+        Choose <span class="target">one course</span> to develop leadership presence, communication, and team effectiveness. Courses offered in both semesters are shown separately — selecting one automatically greys out the duplicate.
+      </div>
+      <div class="cards-grid" id="grid-comm"></div>
+    </div>
+  </div>
+
+  <!-- 04 Making the Business Case -->
+  <div class="cert-section open" id="s-biz">
+    <div class="section-header" onclick="toggleSec('s-biz')">
+      <span class="section-num">04 —</span>
+      <div class="section-title-wrap">
+        <div class="section-title">Making the Business Case</div>
+        <div class="section-subtitle">Choose one &middot; 3 credits</div>
+      </div>
+      <div class="section-chip" id="chip-biz"><span class="chip-dot"></span>Not selected</div>
+      <i class="bi bi-chevron-down section-chevron"></i>
+    </div>
+    <div class="section-body">
+      <div class="section-instruction">
+        Choose <span class="target">one course</span> spanning entrepreneurship, consulting, marketing, strategy, or venture investing.
+      </div>
+      <div class="cards-grid" id="grid-biz"></div>
+    </div>
+  </div>
+
+  <!-- 05 Competition -->
+  <div class="cert-section open" id="s-comp">
+    <div class="section-header" onclick="toggleSec('s-comp')">
+      <span class="section-num">05 —</span>
+      <div class="section-title-wrap">
+        <div class="section-title">Competition or Challenge</div>
+        <div class="section-subtitle">Choose one path &middot; 0 credits</div>
+      </div>
+      <div class="section-chip" id="chip-comp"><span class="chip-dot"></span>Not selected</div>
+      <i class="bi bi-chevron-down section-chevron"></i>
+    </div>
+    <div class="section-body">
+      <div class="section-instruction">
+        Participate in <span class="target">at least one</span> approved, team-based, time-compressed challenge. Select the path that applies to you — no tuition cost.
+      </div>
+      <div class="cards-stack" id="grid-comp"></div>
+    </div>
+  </div>
+
+  <!-- 06 Leadership Portfolio -->
+  <div class="cert-section open" id="s-port">
+    <div class="section-header" onclick="toggleSec('s-port')">
+      <span class="section-num">06 —</span>
+      <div class="section-title-wrap">
+        <div class="section-title">Leadership Portfolio</div>
+        <div class="section-subtitle">Required throughout program &middot; 0 credits</div>
+      </div>
+      <div class="section-chip" id="chip-port"><span class="chip-dot"></span>Not acknowledged</div>
+      <i class="bi bi-chevron-down section-chevron"></i>
+    </div>
+    <div class="section-body">
+      <div class="section-instruction">
+        Built <span class="target">continuously throughout</span> the certificate — not assembled at the end. Acknowledge your commitment below.
+      </div>
+      <div class="ack-block" id="ack-block">
+        <div class="ack-icon"><i class="bi bi-journal-richtext"></i></div>
+        <div class="ack-body">
+          <div class="ack-title">OPP 34100 — Leadership Portfolio</div>
+          <p class="ack-desc">Includes business cases and financial analyses, decision memos, leadership reflections, executive insight briefs, and competition artifacts. Submitted at completion as both a program assessment and a professional career artifact.</p>
+          <label class="ack-label">
+            <input type="checkbox" id="ack-check" onchange="handleAck(this)">
+            I understand and will curate my portfolio throughout the program
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ── DATA ────────────────────────────────────────────────────── */
+const DATA = {
+  found: [
+    { id:'ACCT 20500', name:'Accounting for Engineers',  prof:'Kevin Koharki', credits:2, sem:'Fall 2026',
+      desc:'Learn how accounting information drives real decisions — assessing performance, evaluating investments, and comparing firms against rivals. Graded on two projects and participation: no exams. You\'ll walk away able to analyze financial statements and build Excel models to support business and investment decisions.' },
+    { id:'FIN 20500',  name:'Finance for Engineers',      prof:'Kevin Koharki', credits:2, sem:'Spring 2027',
+      desc:'The financial fluency every leader needs: reading financial statements, time value of money, discounted cash flow, capital budgeting, and project selection. Heavy use of Excel throughout. You\'ll walk away able to evaluate investments, interpret financial data, and decide which projects a firm should fund — and why.' }
+  ],
+  comm: [
+    { id:'STRT 31200', name:'Venture X1: Discovering Meaningful Problems Worth Solving', prof:'Kosta Grigoriou', credits:3, sem:'Fall 2026',
+      desc:'Pick a problem space you care about and go deep — through stakeholder interviews, market immersion, and customer discovery — until you\'ve identified a validated problem worth building a venture around. The first course in the two-part Venture X sequence.' },
+    { id:'OBHR 44362', name:'Leadership in a Changing World',  prof:'TBD', credits:3, sem:'Fall 2026',
+      desc:'Evidence-based course built around practice, feedback, and self-reflection. You\'ll assess your own leadership strengths, explore what effective leadership looks like in real organizations, and develop a personal leadership philosophy grounded in research.' },
+    { id:'OBHR 33500', name:'Strategic Business Writing',       prof:'TBD', credits:3, sem:'Fall 2026',
+      desc:'A targeted communication course. You\'ll practice executive-level writing, confident oral communication, and the interpersonal leadership behaviors that matter most when working with executives, clients, and cross-functional teams.' },
+    { id:'OBHR 49300', name:'Storytelling with Data',          prof:'Doug Pruim', credits:2, sem:'Spring 2027',
+      desc:'Turns data into decisions. You\'ll learn frameworks for understanding your audience, principles of visual information processing, and hands-on data visualization skills. Final project: a full storytelling-with-data deliverable of your own design.' },
+    { id:'OBHR 44362', name:'Leadership in a Changing World',  prof:'TBD', credits:3, sem:'Spring 2027',
+      desc:'Evidence-based course built around practice, feedback, and self-reflection. You\'ll assess your own leadership strengths, explore what effective leadership looks like in real organizations, and develop a personal leadership philosophy grounded in research.' },
+    { id:'OBHR 33500', name:'Strategic Business Writing',       prof:'TBD', credits:3, sem:'Spring 2027',
+      desc:'A targeted communication course. You\'ll practice executive-level writing, confident oral communication, and the interpersonal leadership behaviors that matter most when working with executives, clients, and cross-functional teams.' }
+  ],
+  biz: [
+    { id:'STRT 51010', name:'Student-managed Venture Fund',   prof:'Matthew Lynall',   credits:3, sem:'Fall 2026',
+      desc:'Act as a venture investment analyst reviewing real startup pitch decks, conducting due diligence, and making actual equity co-investments from a live fund. Includes one-on-one interviews with 8–10 active early-stage investors. Requires an NDA. One of the most distinctive courses on campus.' },
+    { id:'MKTG 32400', name:'Marketing Management',           prof:'Stephen Leitch',   credits:3, sem:'Fall 2026',
+      desc:'A foundational course covering customer behavior, segmentation, positioning, pricing, promotion, and competitive analysis. You\'ll develop intuition for analyzing markets and making strategic decisions — and build a foundation for advanced marketing electives.' },
+    { id:'STRT 35500', name:'Consulting Tools & Skills',      prof:'John Burr',        credits:3, sem:'Fall 2026',
+      desc:'Learn the structured problem-solving process used by top consulting firms — diagnosing root causes, analyzing complex problems, and communicating recommendations clearly. Practical skills for any manager, not just consultants.' },
+    { id:'STRT 220',   name:'Making the Business Case',       prof:'Dave Randich',     credits:3, sem:'Spring 2027',
+      desc:'Analyze real business cases in teams and present recommendations in the format used by top consulting firms and senior executives. Taught by a former President/CEO of four organizations across the US, Europe, and Asia. Ideal for anyone targeting case competitions, consulting, or executive roles.' },
+    { id:'STRT 313',   name:'Venture X2: Designing and Building Product to Address Challenge X', prof:'Kostas Grigoriou', credits:3, sem:'Spring 2027',
+      desc:'Starting with a validated problem, you\'ll design and test your way to a working MVP with a tested business model. Rapid prototyping, real customer feedback loops, customer sales calls, supported by a product-building budget. The second course in the Venture X sequence.' },
+    { id:'MKTG 32400', name:'Marketing Management',           prof:'Stephen Leitch',   credits:3, sem:'Spring 2027',
+      desc:'A foundational course covering customer behavior, segmentation, positioning, pricing, promotion, and competitive analysis. You\'ll develop intuition for analyzing markets and making strategic decisions — and build a foundation for advanced marketing electives.' },
+    { id:'STRT 35500', name:'Consulting Tools & Skills',      prof:'John Burr',        credits:3, sem:'Spring 2027',
+      desc:'Learn the structured problem-solving process used by top consulting firms — diagnosing root causes, analyzing complex problems, and communicating recommendations clearly. Practical skills for any manager, not just consultants.' }
+  ],
+  comp: [
+    { id:'OPP 14100', name:'Competition or Challenge',                   prof:'', credits:0, sem:'Any semester',
+      desc:'Participate in at least one approved, time-compressed, team-based competition. Complete a pre-experience goal-setting survey and a post-experience reflection by taking the 0-credit OPP 14100. Approved options include the Burton D. Morgan Venture Concept Competition, PowerShift Case Competition, Data 4 Good Case Competition, Big Ten Case Competition, Midwest Entrepreneurship Case Competition, and other approved innovation or pitch competitions.' },
+    { id:'OPP 34999', name:'Springer Engineering Business Internship',   prof:'', credits:0, sem:'Any semester',
+      desc:'Satisfy the requirement for a Competition or Challenge by taking on an approved startup, co-op, or industry leadership placement or role. Must take 0-credit OPP 34999 and submit reflection as well as supervisor\'s assessment.' }
+  ]
+};
+
+/* ── STATE ───────────────────────────────────────────────────── */
+const sel = { found:null, comm:null, biz:null, comp:null, port:false };
+
+/* ── HELPERS ─────────────────────────────────────────────────── */
+function semBadge(sem) {
+  if (/fall/i.test(sem))   return `<span class="cbadge cb-fall">${sem}</span>`;
+  if (/spring/i.test(sem)) return `<span class="cbadge cb-spring">${sem}</span>`;
+  return `<span class="cbadge cb-anytime">${sem}</span>`;
+}
+function truncate(s, n) { return s.length > n ? s.slice(0, n-1) + '…' : s; }
+
+/* ── RENDER CARDS ────────────────────────────────────────────── */
+function renderGrid(cat) {
+  const container = document.getElementById(`grid-${cat}`);
+  container.innerHTML = DATA[cat].map((c, i) => {
+    const uid  = `card-${cat}-${i}`;
+    const desc = `desc-${uid}`;
+    const prof = c.prof ? `<span class="cbadge cb-prof"><i class="bi bi-person" style="margin-right:3px"></i>${c.prof}</span>` : '';
+    return `
+      <div class="course-card" id="${uid}" data-cat="${cat}" data-i="${i}" onclick="selectCard('${cat}',${i})">
+        <div class="card-radio"></div>
+        <div class="card-id">${c.id}</div>
+        <div class="card-name">${c.name}</div>
+        <div class="card-meta">
+          <span class="cbadge cb-credits">${c.credits} credit${c.credits!==1?'s':''}</span>
+          ${semBadge(c.sem)}
+          ${prof}
+        </div>
+        <p class="card-desc collapsed" id="${desc}">${c.desc}</p>
+        <button class="card-toggle" onclick="event.stopPropagation();toggleDesc('${desc}',this)">Read more</button>
+      </div>`;
+  }).join('');
+}
+
+/* ── COLLAPSE ─────────────────────────────────────────────────── */
+function toggleSec(id) { document.getElementById(id).classList.toggle('open'); }
+function scrollTo(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (!el.classList.contains('open')) el.classList.add('open');
+  el.scrollIntoView({ behavior:'smooth', block:'start' });
+}
+function toggleDesc(id, btn) {
+  const el = document.getElementById(id);
+  el.classList.toggle('collapsed');
+  btn.textContent = el.classList.contains('collapsed') ? 'Read more' : 'Show less';
+}
+
+/* ── SELECTION ─────────────────────────────────────────────────── */
+function selectCard(cat, i) {
+  const chosen = DATA[cat][i];
+  document.querySelectorAll(`.course-card[data-cat="${cat}"]`).forEach(c => c.classList.remove('card-selected','card-greyed'));
+  document.getElementById(`card-${cat}-${i}`).classList.add('card-selected');
+  sel[cat] = chosen;
+  DATA[cat].forEach((c, j) => {
+    if (j !== i && c.id === chosen.id)
+      document.getElementById(`card-${cat}-${j}`).classList.add('card-greyed');
+  });
+  updateTracker(cat);
+  updateTotal();
+  updateChip(cat);
+}
+
+/* ── ACKNOWLEDGE ──────────────────────────────────────────────── */
+function handleAck(cb) {
+  sel.port = cb.checked;
+  document.getElementById('ack-block').classList.toggle('ack-done', cb.checked);
+  updateTrackerSimple('port', cb.checked ? 1 : 0, '—', '', cb.checked ? '✓ Acknowledged' : 'Acknowledge below', cb.checked ? 'OPP 34100 · Ongoing' : '— Not acknowledged');
+  updateTotal();
+  updateChip('port');
+}
+
+/* ── TRACKER ──────────────────────────────────────────────────── */
+function setTCard(id, pct, nVal, status, selText) {
+  const card = document.getElementById(`tc-${id}`);
+  const bar  = document.getElementById(`tb-${id}`);
+  const nEl  = document.getElementById(`tn-${id}`);
+  const stEl = document.getElementById(`tst-${id}`);
+  const seEl = document.getElementById(`ts-${id}`);
+
+  card.classList.remove('ty','tg');
+  if (pct >= 1) card.classList.add('tg');
+  else if (pct >= 0.5) card.classList.add('ty');
+
+  bar.style.width = Math.min(pct*100, 100) + '%';
+  bar.className = 'tcard-bar' + (pct>=1?' bg':pct>=0.5?' by':'');
+
+  if (nEl) nEl.textContent  = nVal;
+  if (stEl) stEl.textContent = status;
+  if (seEl) seEl.textContent = selText;
+}
+
+function updateTracker(cat) {
+  const c = sel[cat]; if (!c) return;
+  const targets = { found:2, comm:3, biz:3 };
+  const tgt = targets[cat];
+  const pct = c.credits / tgt;
+  setTCard(cat, pct, c.credits, pct>=1 ? '✓ Requirement met' : `${tgt-c.credits} cr remaining`, `${c.id} · ${truncate(c.name,26)}`);
+}
+
+function updateTrackerSimple(id, pct, nVal, denom, status, selText) {
+  setTCard(id, pct, nVal, status, selText);
+}
+
+function updateTotal() {
+  const cr = 2
+    + (sel.found ? sel.found.credits : 0)
+    + (sel.comm  ? sel.comm.credits  : 0)
+    + (sel.biz   ? sel.biz.credits   : 0);
+  const allMet = sel.found && sel.comm && sel.biz && sel.comp && sel.port;
+  const pct = Math.min(cr / 10, 1);
+
+  const card = document.getElementById('tc-total');
+  const bar  = document.getElementById('tb-total');
+  const nEl  = document.getElementById('tn-total');
+  const stEl = document.getElementById('tst-total');
+
+  card.classList.remove('ty','tg');
+  if (allMet) card.classList.add('tg');
+  else if (pct >= 0.5) card.classList.add('ty');
+
+  bar.style.width = (pct*100)+'%';
+  bar.className = 'tcard-bar'+(allMet?' bg':pct>=0.5?' by':'');
+  nEl.textContent = cr;
+
+  if (allMet) {
+    stEl.textContent = '✓ All requirements met!';
+  } else {
+    const next = !sel.found ? 'Foundational Logic'
+               : !sel.comm  ? 'Communicate & Lead'
+               : !sel.biz   ? 'Business Case'
+               : !sel.comp  ? 'Competition'
+               : !sel.port  ? 'Portfolio'
+               : '';
+    stEl.textContent = next ? `Next: ${next}` : 'Almost there!';
+  }
+
+  const btn = document.getElementById('btn-print');
+  btn.classList.toggle('ready', !!allMet);
+
+  // comp tracker
+  if (sel.comp) {
+    setTCard('comp', 1, '✓', '✓ Path selected', `${sel.comp.id} · ${truncate(sel.comp.name,22)}`);
+  }
+  // port tracker
+  updateTrackerSimple('port', sel.port?1:0, sel.port?'✓':'—', '', sel.port?'✓ Acknowledged':'Acknowledge below', sel.port?'OPP 34100 · Ongoing':'— Not acknowledged');
+}
+
+/* ── CHIP + SECTION COMPLETE ──────────────────────────────────── */
+const CHIP_IDS = { found:'chip-found', comm:'chip-comm', biz:'chip-biz', comp:'chip-comp', port:'chip-port' };
+const SEC_IDS  = { found:'s-found',    comm:'s-comm',    biz:'s-biz',    comp:'s-comp',    port:'s-port'    };
+const EMPTY    = { found:'Not selected', comm:'Not selected', biz:'Not selected', comp:'Not selected', port:'Not acknowledged' };
+
+function updateChip(cat) {
+  const chip = document.getElementById(CHIP_IDS[cat]);
+  const sec  = document.getElementById(SEC_IDS[cat]);
+  if (!chip || !sec) return;
+  chip.classList.remove('chip-done');
+  const done = cat === 'port' ? sel.port : !!sel[cat];
+  if (done) {
+    const label = cat === 'port' ? 'Acknowledged'
+                : truncate(sel[cat].name, 22);
+    chip.innerHTML = `<span class="chip-dot"></span>${label}`;
+    chip.classList.add('chip-done');
+    sec.classList.add('is-complete');
+  } else {
+    chip.innerHTML = `<span class="chip-dot"></span>${EMPTY[cat]}`;
+    sec.classList.remove('is-complete');
+  }
+}
+
+/* ── PRINT ────────────────────────────────────────────────────── */
+function doPrint() {
+  const d = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('ps-date').textContent = d;
+  document.getElementById('ps-footer-date').textContent = d;
+
+  const rows = [
+    { lbl:'01 — Executive Practice & Industry Insight',      item:{ id:'ENGR 30301', name:'Springer Engineering Executive Forum',  credits:2 } },
+    { lbl:'02 — Business of Engineering Foundational Logic', item:sel.found },
+    { lbl:'03 — Communicating & Leading Self and Teams',     item:sel.comm  },
+    { lbl:'04 — Making the Business Case',                   item:sel.biz   },
+    { lbl:'05 — Competition or Challenge',                   item:sel.comp  },
+    { lbl:'06 — Leadership Portfolio',                       item:sel.port ? { id:'OPP 34100', name:'Leadership Portfolio', credits:0 } : null }
+  ];
+
+  let total = 0, html = '';
+  rows.forEach(r => {
+    if (!r.item) return;
+    total += r.item.credits || 0;
+    html += `<div class="ps-sec">
+      <div class="ps-sec-ttl"><span>${r.lbl}</span><span class="ps-cr">${r.item.credits} cr</span></div>
+      <table class="ps-tbl">
+        <thead><tr><th>Course ID</th><th>Course Name</th><th style="text-align:right">Credits</th></tr></thead>
+        <tbody><tr><td class="tc">${r.item.id}</td><td>${r.item.name}</td><td class="cr">${r.item.credits}</td></tr></tbody>
+      </table></div>`;
+  });
+
+  document.getElementById('ps-body').innerHTML = html;
+  document.getElementById('ps-tot-val').textContent = `${total} cr`;
+  window.print();
+}
+
+/* ── RESET ────────────────────────────────────────────────────── */
+function doReset() {
+  sel.found = null; sel.comm = null; sel.biz = null; sel.comp = null; sel.port = false;
+  document.getElementById('ack-check').checked = false;
+  document.getElementById('ack-block').classList.remove('ack-done');
+  ['found','comm','biz','comp'].forEach(cat => renderGrid(cat));
+  ['found','comm','biz','comp','port'].forEach(cat => {
+    const chip = document.getElementById(CHIP_IDS[cat]);
+    const sec  = document.getElementById(SEC_IDS[cat]);
+    if (chip) { chip.innerHTML=`<span class="chip-dot"></span>${EMPTY[cat]}`; chip.classList.remove('chip-done'); }
+    if (sec)  sec.classList.remove('is-complete');
+  });
+  ['found','comm','biz'].forEach(cat => setTCard(cat, 0, 0, 'Select one course', '— Not selected'));
+  setTCard('comp', 0, '—', 'Select one path',  '— Not selected');
+  setTCard('port', 0, '—', 'Acknowledge below','— Not acknowledged');
+
+  const card = document.getElementById('tc-total');
+  const bar  = document.getElementById('tb-total');
+  card.classList.remove('ty','tg');
+  bar.style.width = '20%'; bar.className = 'tcard-bar by';
+  document.getElementById('tn-total').textContent  = '2';
+  document.getElementById('tst-total').textContent = 'Complete all sections';
+  document.getElementById('btn-print').classList.remove('ready');
+}
+
+/* ── INIT ─────────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  ['found','comm','biz','comp'].forEach(cat => renderGrid(cat));
+});
+</script>
+</body>
+</html>
