@@ -45,10 +45,19 @@
     }
 
     /* ── Layout ───────────────────────────────────────────── */
-    .page-wrapper {
+    /* Two-column flex container: sticky tracker | scrolling content */
+    .tool-layout {
+      display: flex;
+      align-items: flex-start;   /* required for position:sticky to work */
       max-width: 1280px;
       margin: 0 auto;
-      padding: 0 32px 80px calc(var(--tracker-w) + 48px);
+      padding: 0 32px;
+      gap: 32px;
+    }
+    .page-wrapper {
+      flex: 1;
+      min-width: 0;              /* prevents flex child from overflowing */
+      padding: 0 0 80px;
     }
 
     /* ── Hero ─────────────────────────────────────────────── */
@@ -71,7 +80,7 @@
     .hero-inner {
       max-width: 1280px;
       margin: 0 auto;
-      padding: 0 32px 0 calc(var(--tracker-w) + 48px);
+      padding: 0 32px;
     }
     .hero-overline {
       font-family: 'Space Mono', monospace;
@@ -397,16 +406,16 @@
     }
     .ack-label input[type="checkbox"] { accent-color: var(--pu-aged); width:16px; height:16px; cursor:pointer; }
 
-    /* ── Floating Tracker ──────────────────────────────────── */
+    /* ── Sticky Tracker (left column of .tool-layout) ─────────── */
     #tracker {
-      position: fixed;
-      top: 28px; left: 24px;
+      position: sticky;
+      top: 16px;
       width: var(--tracker-w);
-      z-index: 1000;
+      flex-shrink: 0;
       display: flex;
       flex-direction: column;
       gap: 6px;
-      max-height: calc(100vh - 48px);
+      max-height: calc(100vh - 32px);
       overflow-y: auto;
       scrollbar-width: none;
     }
@@ -561,6 +570,9 @@
     }
     .btn-reset:hover { color: var(--text-main); border-color: var(--pu-aged); }
 
+    /* ── Mobile action buttons (shown below section 06 at ≤960px) ─ */
+    #mobile-actions { display: none; }
+
     /* ── Print styles ──────────────────────────────────────── */
     #print-summary { display: none; }
     @media print {
@@ -638,24 +650,65 @@
       line-height: 1.6;
     }
 
+    /* ── Section header — mobile reflow ───────────────────────── */
+    /* Below 640px the chip wraps onto its own row so the title    */
+    /* always has the full width of row 1 to itself.               */
+    @media (max-width: 640px) {
+      .section-header {
+        flex-wrap: wrap;
+        row-gap: 6px;        /* tighter vertical gap between the two rows */
+      }
+      /* Explicit order keeps chevron on row 1 even though it sits  */
+      /* after the chip in the DOM.                                  */
+      .section-num        { order: 1; }
+      .section-title-wrap { order: 2; }
+      .section-chevron    { order: 3; margin-left: auto; }
+      .section-chip {
+        order: 4;
+        flex-basis: 100%;       /* forces chip onto its own flex row   */
+        /* margin-left: 46px;      aligns under the title (num + gap)  */
+        justify-content: flex-start;
+      }
+    }
+
+    /* At very small phones, also trim the title font slightly      */
+    @media (max-width: 400px) {
+      .section-title { font-size: 0.9rem; }
+      /* .section-chip  { margin-left: 40px; } */
+    }
+
     @media (max-width: 960px) {
-      :root { --tracker-w: 0px; }
-      .page-wrapper, .hero-inner { padding-left: 16px; padding-right: 16px; }
+      /* Stack tracker above content rather than floating over template footer */
+      .tool-layout {
+        flex-direction: column;
+        padding: 0 16px;
+        gap: 0;
+      }
+      .hero-inner { padding-left: 16px; padding-right: 16px; }
       #tracker {
-        position: fixed;
-        bottom:0; top:auto; left:0; right:0;
-        width:100%; max-height:36vh;
-        flex-direction:row; flex-wrap:nowrap;
-        overflow-x:auto; overflow-y:hidden;
-        padding:10px 16px; gap:6px;
-        background:rgba(255,255,255,0.97);
-        backdrop-filter:blur(10px);
-        border-top:2px solid var(--pu-gold);
-        box-shadow:0 -4px 20px rgba(0,0,0,0.1);
+        position: static;       /* never touches the viewport — fully in flow */
+        width: 100%;
+        max-height: none;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 10px 0;
+        gap: 6px;
+        margin-bottom: 16px;
+        border-bottom: 2px solid var(--pu-gold);
       }
       .tracker-hdr, .tcard-sel, .btn-print, .btn-reset { display:none; }
       .tcard { min-width:130px; flex-shrink:0; }
-      body { padding-bottom:200px; }
+      body { padding-bottom: 24px; }
+      #mobile-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 8px 0 0;
+      }
+      #mobile-actions .btn-print,
+      #mobile-actions .btn-reset { display: flex; width: 100%; }
       .cards-grid { grid-template-columns:1fr; }
     }
   </style>
@@ -683,7 +736,28 @@
   </div>
 </div>
 
-<!-- ══ FLOATING TRACKER ══════════════════════════════════════════ -->
+<!-- ══ HERO ══════════════════════════════════════════════════════ -->
+<div class="hero-banner">
+  <div class="hero-inner">
+    <div class="hero-overline">Purdue University · College of Engineering</div>
+    <h1 class="hero-title">Springer Engineering<br><span>Business Experience</span></h1>
+    <p class="hero-sub">Select your courses for each requirement below. Your progress is tracked in real time in the sidebar.</p>
+    <div class="req-pills">
+      <div class="req-pill"><strong>2 cr</strong>&nbsp; Executive Forum</div>
+      <div class="req-pill"><strong>2 cr</strong>&nbsp; Foundational Logic</div>
+      <div class="req-pill"><strong>2–3 cr</strong>&nbsp; Communicate &amp; Lead</div>
+      <div class="req-pill"><strong>3 cr</strong>&nbsp; Business Case</div>
+      <div class="req-pill"><strong>0 cr</strong>&nbsp; Competition</div>
+      <div class="req-pill"><strong>0 cr</strong>&nbsp; Portfolio</div>
+      <div class="req-pill"><strong>9–10 cr</strong>&nbsp; Total</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MAIN ═══════════════════════════════════════════════════════ -->
+<div class="tool-layout">
+
+<!-- ── Progress Tracker (sticky left column) ──────────────────── -->
 <div id="tracker">
   <div class="tracker-hdr"><div class="t-dot"></div>Progress Tracker</div>
 
@@ -760,25 +834,6 @@
   </button>
 </div>
 
-<!-- ══ HERO ══════════════════════════════════════════════════════ -->
-<div class="hero-banner">
-  <div class="hero-inner">
-    <div class="hero-overline">Purdue University · College of Engineering</div>
-    <h1 class="hero-title">Springer Engineering<br><span>Business Experience</span></h1>
-    <p class="hero-sub">Select your courses for each requirement below. Your progress is tracked in real time on the left.</p>
-    <div class="req-pills">
-      <div class="req-pill"><strong>2 cr</strong>&nbsp; Executive Forum</div>
-      <div class="req-pill"><strong>2 cr</strong>&nbsp; Foundational Logic</div>
-      <div class="req-pill"><strong>2–3 cr</strong>&nbsp; Communicate &amp; Lead</div>
-      <div class="req-pill"><strong>3 cr</strong>&nbsp; Business Case</div>
-      <div class="req-pill"><strong>0 cr</strong>&nbsp; Competition</div>
-      <div class="req-pill"><strong>0 cr</strong>&nbsp; Portfolio</div>
-      <div class="req-pill"><strong>9–10 cr</strong>&nbsp; Total</div>
-    </div>
-  </div>
-</div>
-
-<!-- ══ MAIN ═══════════════════════════════════════════════════════ -->
 <div class="page-wrapper">
 
   <!-- 01 Executive Forum -->
@@ -920,7 +975,18 @@
     </div>
   </div>
 
-</div>
+  <!-- Mobile-only action buttons — hidden at desktop, shown at ≤960px -->
+  <div id="mobile-actions">
+    <button class="btn-print" onclick="doPrint()">
+      <i class="bi bi-printer"></i> Print My Plan
+    </button>
+    <button class="btn-reset" onclick="doReset()">
+      <i class="bi bi-arrow-counterclockwise" style="margin-right:4px"></i> Reset All
+    </button>
+  </div>
+
+</div><!-- /.page-wrapper -->
+</div><!-- /.tool-layout -->
 
 <script>
 /* ── DATA ────────────────────────────────────────────────────── */
@@ -1075,8 +1141,9 @@ function updateTotal() {
     stEl.textContent = next ? `Next: ${next}` : 'Almost there!';
   }
 
-  const btn = document.getElementById('btn-print');
-  btn.classList.toggle('ready', !!allMet);
+  document.querySelectorAll('.btn-print').forEach(function(btn) {
+    btn.classList.toggle('ready', !!allMet);
+  });
 
   // comp tracker
   if (sel.comp) {
@@ -1163,7 +1230,7 @@ function doReset() {
   bar.style.width = '20%'; bar.className = 'tcard-bar by';
   document.getElementById('tn-total').textContent  = '2';
   document.getElementById('tst-total').textContent = 'Complete all sections';
-  document.getElementById('btn-print').classList.remove('ready');
+  document.querySelectorAll('.btn-print').forEach(function(btn) { btn.classList.remove('ready'); });
 }
 
 /* ── COURSE DATA LOADER ───────────────────────────────────────── */
