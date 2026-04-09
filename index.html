@@ -589,6 +589,55 @@
     }
 
     /* ── Responsive ────────────────────────────────────────── */
+    /* ── Course data loading / error states ───────────────────── */
+    .course-load-placeholder {
+      grid-column: 1 / -1;
+      padding: 28px 18px;
+      text-align: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+    }
+    .course-load-placeholder::before {
+      content: '○  Loading course data…';
+    }
+    .course-load-placeholder.error-state::before {
+      content: '';
+    }
+    .course-error-msg {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      background: #fff8f7;
+      border: 1px solid rgba(192,57,43,0.2);
+      border-left: 3px solid #c0392b;
+      border-radius: 4px;
+      padding: 18px 20px;
+      width: 100%;
+    }
+    .course-error-msg .err-icon {
+      font-size: 1.4rem;
+      color: #c0392b;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .course-error-msg .err-body { flex: 1; }
+    .course-error-msg .err-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #c0392b;
+      margin-bottom: 5px;
+    }
+    .course-error-msg .err-text {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
     @media (max-width: 960px) {
       :root { --tracker-w: 0px; }
       .page-wrapper, .hero-inner { padding-left: 16px; padding-right: 16px; }
@@ -781,7 +830,7 @@
       <div class="section-instruction">
         Choose <span class="target">one course</span> to build the financial fluency every engineering leader needs.
       </div>
-      <div class="cards-grid" id="grid-found"></div>
+      <div class="cards-grid" id="grid-found"><div class="course-load-placeholder" data-section="found"></div></div>
     </div>
   </div>
 
@@ -800,7 +849,7 @@
       <div class="section-instruction">
         Choose <span class="target">one course</span> to develop leadership presence, communication, and team effectiveness. Courses offered in both semesters are shown separately — selecting one automatically greys out the duplicate.
       </div>
-      <div class="cards-grid" id="grid-comm"></div>
+      <div class="cards-grid" id="grid-comm"><div class="course-load-placeholder" data-section="comm"></div></div>
     </div>
   </div>
 
@@ -819,7 +868,7 @@
       <div class="section-instruction">
         Choose <span class="target">one course</span> spanning entrepreneurship, consulting, marketing, strategy, or venture investing.
       </div>
-      <div class="cards-grid" id="grid-biz"></div>
+      <div class="cards-grid" id="grid-biz"><div class="course-load-placeholder" data-section="biz"></div></div>
     </div>
   </div>
 
@@ -875,43 +924,12 @@
 
 <script>
 /* ── DATA ────────────────────────────────────────────────────── */
+// found / comm / biz are populated at runtime from course-data.js.
+// comp is hardcoded here — update directly in this file if needed.
 const DATA = {
-  found: [
-    { id:'ACCT 20500', name:'Accounting for Engineers',  prof:'Kevin Koharki', credits:2, sem:'Fall 2026',
-      desc:'Learn how accounting information drives real decisions — assessing performance, evaluating investments, and comparing firms against rivals. Graded on two projects and participation: no exams. You\'ll walk away able to analyze financial statements and build Excel models to support business and investment decisions.' },
-    { id:'FIN 20500',  name:'Finance for Engineers',      prof:'Kevin Koharki', credits:2, sem:'Spring 2027',
-      desc:'The financial fluency every leader needs: reading financial statements, time value of money, discounted cash flow, capital budgeting, and project selection. Heavy use of Excel throughout. You\'ll walk away able to evaluate investments, interpret financial data, and decide which projects a firm should fund — and why.' }
-  ],
-  comm: [
-    { id:'STRT 31200', name:'Venture X1: Discovering Meaningful Problems Worth Solving', prof:'Kosta Grigoriou', credits:3, sem:'Fall 2026',
-      desc:'Pick a problem space you care about and go deep — through stakeholder interviews, market immersion, and customer discovery — until you\'ve identified a validated problem worth building a venture around. The first course in the two-part Venture X sequence.' },
-    { id:'OBHR 44362', name:'Leadership in a Changing World',  prof:'TBD', credits:3, sem:'Fall 2026',
-      desc:'Evidence-based course built around practice, feedback, and self-reflection. You\'ll assess your own leadership strengths, explore what effective leadership looks like in real organizations, and develop a personal leadership philosophy grounded in research.' },
-    { id:'OBHR 33500', name:'Strategic Business Writing',       prof:'TBD', credits:3, sem:'Fall 2026',
-      desc:'A targeted communication course. You\'ll practice executive-level writing, confident oral communication, and the interpersonal leadership behaviors that matter most when working with executives, clients, and cross-functional teams.' },
-    { id:'OBHR 49300', name:'Storytelling with Data',          prof:'Doug Pruim', credits:2, sem:'Spring 2027',
-      desc:'Turns data into decisions. You\'ll learn frameworks for understanding your audience, principles of visual information processing, and hands-on data visualization skills. Final project: a full storytelling-with-data deliverable of your own design.' },
-    { id:'OBHR 44362', name:'Leadership in a Changing World',  prof:'TBD', credits:3, sem:'Spring 2027',
-      desc:'Evidence-based course built around practice, feedback, and self-reflection. You\'ll assess your own leadership strengths, explore what effective leadership looks like in real organizations, and develop a personal leadership philosophy grounded in research.' },
-    { id:'OBHR 33500', name:'Strategic Business Writing',       prof:'TBD', credits:3, sem:'Spring 2027',
-      desc:'A targeted communication course. You\'ll practice executive-level writing, confident oral communication, and the interpersonal leadership behaviors that matter most when working with executives, clients, and cross-functional teams.' }
-  ],
-  biz: [
-    { id:'STRT 51010', name:'Student-managed Venture Fund',   prof:'Matthew Lynall',   credits:3, sem:'Fall 2026',
-      desc:'Act as a venture investment analyst reviewing real startup pitch decks, conducting due diligence, and making actual equity co-investments from a live fund. Includes one-on-one interviews with 8–10 active early-stage investors. Requires an NDA. One of the most distinctive courses on campus.' },
-    { id:'MKTG 32400', name:'Marketing Management',           prof:'Stephen Leitch',   credits:3, sem:'Fall 2026',
-      desc:'A foundational course covering customer behavior, segmentation, positioning, pricing, promotion, and competitive analysis. You\'ll develop intuition for analyzing markets and making strategic decisions — and build a foundation for advanced marketing electives.' },
-    { id:'STRT 35500', name:'Consulting Tools & Skills',      prof:'John Burr',        credits:3, sem:'Fall 2026',
-      desc:'Learn the structured problem-solving process used by top consulting firms — diagnosing root causes, analyzing complex problems, and communicating recommendations clearly. Practical skills for any manager, not just consultants.' },
-    { id:'STRT 220',   name:'Making the Business Case',       prof:'Dave Randich',     credits:3, sem:'Spring 2027',
-      desc:'Analyze real business cases in teams and present recommendations in the format used by top consulting firms and senior executives. Taught by a former President/CEO of four organizations across the US, Europe, and Asia. Ideal for anyone targeting case competitions, consulting, or executive roles.' },
-    { id:'STRT 313',   name:'Venture X2: Designing and Building Product to Address Challenge X', prof:'Kostas Grigoriou', credits:3, sem:'Spring 2027',
-      desc:'Starting with a validated problem, you\'ll design and test your way to a working MVP with a tested business model. Rapid prototyping, real customer feedback loops, customer sales calls, supported by a product-building budget. The second course in the Venture X sequence.' },
-    { id:'MKTG 32400', name:'Marketing Management',           prof:'Stephen Leitch',   credits:3, sem:'Spring 2027',
-      desc:'A foundational course covering customer behavior, segmentation, positioning, pricing, promotion, and competitive analysis. You\'ll develop intuition for analyzing markets and making strategic decisions — and build a foundation for advanced marketing electives.' },
-    { id:'STRT 35500', name:'Consulting Tools & Skills',      prof:'John Burr',        credits:3, sem:'Spring 2027',
-      desc:'Learn the structured problem-solving process used by top consulting firms — diagnosing root causes, analyzing complex problems, and communicating recommendations clearly. Practical skills for any manager, not just consultants.' }
-  ],
+  found: [],
+  comm:  [],
+  biz:   [],
   comp: [
     { id:'OPP 14100', name:'Competition or Challenge',                   prof:'', credits:0, sem:'Any semester',
       desc:'Participate in at least one approved, time-compressed, team-based competition. Complete a pre-experience goal-setting survey and a post-experience reflection by taking the 0-credit OPP 14100. Approved options include the Burton D. Morgan Venture Concept Competition, PowerShift Case Competition, Data 4 Good Case Competition, Big Ten Case Competition, Midwest Entrepreneurship Case Competition, and other approved innovation or pitch competitions.' },
@@ -1148,9 +1166,61 @@ function doReset() {
   document.getElementById('btn-print').classList.remove('ready');
 }
 
+/* ── COURSE DATA LOADER ───────────────────────────────────────── */
+// course-data.js is fetched fresh once per calendar day (cache-busting).
+// It sets the global variable COURSE_DATA with found / comm / biz arrays.
+// Sections 05 (comp) and 06 (portfolio) are hardcoded above and unaffected.
+
+function showCourseError() {
+  ['found','comm','biz'].forEach(function(cat) {
+    var el = document.getElementById('grid-' + cat);
+    if (!el) return;
+    var ph = el.querySelector('.course-load-placeholder');
+    if (!ph) { ph = document.createElement('div'); ph.className = 'course-load-placeholder'; el.appendChild(ph); }
+    ph.classList.add('error-state');
+    ph.innerHTML = '<div class="course-error-msg">' +
+      '<div class="err-icon"><i class="bi bi-exclamation-circle"></i></div>' +
+      '<div class="err-body">' +
+        '<div class="err-title">Course data temporarily unavailable</div>' +
+        '<p class="err-text">We\'re sorry — the course selector is temporarily unavailable. ' +
+        'Please check back soon, or contact the Springer Engineering Business Experience ' +
+        'office for assistance with course selection.</p>' +
+      '</div>' +
+    '</div>';
+  });
+}
+
+function initWithCourseData() {
+  if (typeof COURSE_DATA === 'undefined' ||
+      !Array.isArray(COURSE_DATA.found) ||
+      !Array.isArray(COURSE_DATA.comm)  ||
+      !Array.isArray(COURSE_DATA.biz)) {
+    showCourseError();
+    return;
+  }
+  DATA.found = COURSE_DATA.found;
+  DATA.comm  = COURSE_DATA.comm;
+  DATA.biz   = COURSE_DATA.biz;
+  ['found','comm','biz'].forEach(function(cat) { renderGrid(cat); });
+}
+
 /* ── INIT ─────────────────────────────────────────────────────── */
-document.addEventListener('DOMContentLoaded', () => {
-  ['found','comm','biz','comp'].forEach(cat => renderGrid(cat));
+document.addEventListener('DOMContentLoaded', function() {
+  // comp is hardcoded — render it immediately
+  renderGrid('comp');
+
+  // Load course-data.js with a daily cache buster so updates reach
+  // students within one calendar day of the admin uploading a new file.
+  var d = new Date();
+  var datestamp = d.getFullYear() +
+    String(d.getMonth() + 1).padStart(2, '0') +
+    String(d.getDate()).padStart(2, '0');
+
+  var script = document.createElement('script');
+  script.src = 'course-data.js?v=' + datestamp;
+  script.onload = initWithCourseData;
+  script.onerror = showCourseError;
+  document.head.appendChild(script);
 });
 </script>
 </body>
