@@ -3,23 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Springer Engineering Business Experience Certificate - Course Planner</title>
+  <title>Engineering Business Experience Certificate - Course Planner</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;600;700&family=Barlow+Condensed:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <!-- Purdue brand fonts loaded via Adobe Fonts (Typekit) when available.      -->
+  <!-- Fallbacks: Franklin Gothic Medium → Arial (Acumin Pro),                 -->
+  <!--            Impact → Arial Narrow (United Sans),                         -->
+  <!--            Georgia (Source Serif Pro).                                   -->
+  <!-- To activate brand fonts, add your institution's Adobe Fonts embed here. -->
 
   <style>
     :root {
       --pu-black:    #000000;
       --pu-gold:     #CFB991;
-      --pu-aged:     #8E6F3E;
+      --pu-aged:     #886938;  /* darkened from #8E6F3E for 4.5:1 on tinted backgrounds */
       --pu-rush:     #DAAA00;
       --pu-field:    #DDB945;
       --pu-dust:     #EBD99F;
       --pu-steel:    #555960;
-      --pu-cool:     #6F727B;
-      --pu-railway:  #9D9795;
+      --pu-cool:     #6A6D76;  /* darkened from #6F727B for 4.5:1 on tinted backgrounds */
+      --pu-railway:  #888281;  /* darkened from #9D9795 for 3:1 on white (UI components) */
       --pu-steam:    #C4BFC0;
       --pu-white:    #FFFFFF;
       --bg-page:     #F7F5F0;
@@ -28,17 +32,26 @@
       --border-soft: rgba(142,111,62,0.18);
       --border-rule: #E5E0D8;
       --text-main:   #1a1a1a;
-      --text-muted:  #6F727B;
-      --green:       #27ae60;
+      --text-muted:  #6A6D76;  /* darkened from #6F727B for 4.5:1 on tinted backgrounds */
+      --green:       #27ae60;  /* decorative only — borders, bars, backgrounds */
+      --green-text:  #1D8348;  /* text-only green, 4.5:1 on white and tinted backgrounds */
       --yellow:      #DAAA00;
       --tracker-w:   268px;
+
+      /* ── Purdue brand font stacks ── */
+      --pu-font-sans:     'Acumin Pro', 'Franklin Gothic Medium', Arial, sans-serif;
+      --pu-font-sans-sc:  'Acumin Pro SemiCondensed', 'Franklin Gothic Medium', Arial, sans-serif;
+      --pu-font-sans-cd:  'Acumin Pro Condensed', 'Franklin Gothic Medium', Arial, sans-serif;
+      --pu-font-sans-xcd: 'Acumin Pro ExtraCondensed', 'Franklin Gothic Medium', Arial, sans-serif;
+      --pu-font-display:  'United Sans', Impact, 'Arial Narrow', sans-serif;
+      --pu-font-serif:    'Source Serif Pro', Georgia, serif;
     }
     *, *::before, *::after { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       background: var(--bg-page);
       color: var(--text-main);
-      font-family: 'Barlow', sans-serif;
+      font-family: var(--pu-font-sans);
       font-weight: 300;
       min-height: 100vh;
       overflow-x: hidden;
@@ -83,11 +96,11 @@
       padding: 0 32px;
     }
     .hero-overline {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.68rem;
+      font-family: var(--pu-font-sans);
+      font-size: 0.75rem;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--pu-aged);
+      color: #91713F;  /* lighter than --pu-aged — on black bg needs 4.5:1 in opposite direction */
       margin-bottom: 10px;
       display: flex;
       align-items: center;
@@ -100,7 +113,7 @@
       background: var(--pu-rush);
     }
     .hero-title {
-      font-family: 'Barlow Condensed', sans-serif;
+      font-family: var(--pu-font-sans-xcd);
       font-size: clamp(2rem, 3.5vw, 3.2rem);
       font-weight: 700;
       line-height: 1.05;
@@ -118,8 +131,8 @@
     }
     .req-pills { display: flex; flex-wrap: wrap; gap: 7px; }
     .req-pill {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.63rem;
+      font-family: var(--pu-font-sans);
+      font-size: 0.75rem;
       letter-spacing: 0.05em;
       padding: 4px 10px;
       border: 1px solid rgba(207,185,145,0.25);
@@ -155,8 +168,8 @@
     }
     .section-header:hover { background: var(--bg-tint); }
     .section-num {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.6rem;
+      font-family: var(--pu-font-sans);
+      font-size: 0.72rem;
       color: var(--pu-aged);
       letter-spacing: 0.12em;
       white-space: nowrap;
@@ -164,7 +177,7 @@
     }
     .section-title-wrap { flex: 1; min-width: 0; }
     .section-title {
-      font-family: 'Barlow Condensed', sans-serif;
+      font-family: var(--pu-font-sans-xcd);
       font-size: 1.05rem;
       font-weight: 600;
       letter-spacing: 0.05em;
@@ -174,8 +187,8 @@
       line-height: 1.2;
     }
     .section-subtitle {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.58rem;
+      font-family: var(--pu-font-sans);
+      font-size: 0.72rem;
       color: var(--text-muted);
       letter-spacing: 0.04em;
       margin-top: 3px;
@@ -184,8 +197,8 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.58rem;
+      font-family: var(--pu-font-sans);
+      font-size: 0.72rem;
       letter-spacing: 0.06em;
       padding: 3px 9px;
       border-radius: 2px;
@@ -198,7 +211,7 @@
     }
     .section-chip.chip-done {
       border-color: rgba(39,174,96,0.45);
-      color: var(--green);
+      color: var(--green-text);  /* --green alone only 2.87:1 on white */
       background: rgba(39,174,96,0.06);
     }
     .section-chip.chip-req {
@@ -228,8 +241,8 @@
     .cert-section.open .section-body { display: block; }
 
     .section-instruction {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.67rem;
+      font-family: var(--pu-font-sans);
+      font-size: 0.75rem;
       color: var(--text-muted);
       letter-spacing: 0.03em;
       line-height: 1.65;
@@ -300,8 +313,8 @@
 
     .card-req-badge {
       display: inline-block;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.55rem;
+      font-family: var(--pu-font-sans);
+      font-size: 0.7rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--pu-aged);
@@ -314,15 +327,15 @@
     }
 
     .card-id {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.68rem;
+      font-family: var(--pu-font-sans);
+      font-size: 0.75rem;
       color: var(--pu-aged);
       letter-spacing: 0.04em;
       margin-bottom: 4px;
       padding-right: 26px;
     }
     .card-name {
-      font-family: 'Barlow', sans-serif;
+      font-family: var(--pu-font-sans);
       font-weight: 600;
       font-size: 0.97rem;
       color: var(--text-main);
@@ -332,14 +345,14 @@
     }
     .card-meta { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
     .cbadge {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.6rem;
+      font-family: var(--pu-font-sans);
+      font-size: 0.72rem;
       letter-spacing: 0.03em;
       padding: 2px 7px;
       border-radius: 2px;
     }
     .cb-credits { background:#F0EDE7; color:var(--pu-steel); border:1px solid var(--border-rule); }
-    .cb-fall    { background:#FEF3E2; color:#A06500;          border:1px solid rgba(218,170,0,.25); }
+    .cb-fall    { background:#FEF3E2; color:#9E6300;          border:1px solid rgba(218,170,0,.25); }  /* #A06500 was 4.39:1 → #9E6300 is 4.51:1 */
     .cb-spring  { background:#E8F4EC; color:#2A6E3F;          border:1px solid rgba(39,174,96,.25); }
     .cb-anytime { background:#EEF0F4; color:var(--pu-cool);   border:1px solid var(--border-rule); }
     .cb-prof    { background:#F0EDE7; color:var(--pu-cool);   border:1px solid var(--border-rule); }
@@ -358,8 +371,8 @@
       overflow: hidden;
     }
     .card-toggle {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.63rem;
+      font-family: var(--pu-font-sans);
+      font-size: 0.75rem;
       color: var(--pu-aged);
       background: none;
       border: none;
@@ -388,7 +401,7 @@
     .ack-icon { font-size: 1.6rem; color: var(--pu-gold); flex-shrink: 0; margin-top: 2px; }
     .ack-body { flex: 1; }
     .ack-title {
-      font-family: 'Barlow Condensed', sans-serif;
+      font-family: var(--pu-font-sans-xcd);
       font-size: 0.95rem;
       font-weight: 600;
       letter-spacing: 0.04em;
@@ -422,8 +435,8 @@
     #tracker::-webkit-scrollbar { display: none; }
 
     .tracker-hdr {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.58rem;
+      font-family: var(--pu-font-sans);
+      font-size: 0.72rem;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--pu-aged);
@@ -467,8 +480,8 @@
     .tcard.tg { border-color: rgba(39,174,96,0.3); box-shadow: 0 2px 8px rgba(39,174,96,0.09); }
 
     .tcard-lbl {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.55rem;
+      font-family: var(--pu-font-sans);
+      font-size: 0.68rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--text-muted);
@@ -476,8 +489,8 @@
       line-height: 1.45;
     }
     .tcard-sel {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.53rem;
+      font-family: var(--pu-font-sans);
+      font-size: 0.65rem;
       color: var(--pu-aged);
       letter-spacing: 0.03em;
       margin-bottom: 7px;
@@ -486,15 +499,15 @@
     }
     .tcard-tally { display: flex; align-items: baseline; gap: 4px; margin-bottom: 7px; }
     .t-n {
-      font-family: 'Barlow Condensed', sans-serif;
+      font-family: var(--pu-font-display);
       font-size: 1.75rem;
       font-weight: 700;
       color: var(--text-main);
       line-height: 1;
       transition: color 0.3s;
     }
-    .tcard.tg .t-n { color: var(--green); }
-    .t-denom { font-family: 'Space Mono', monospace; font-size: 0.68rem; color: var(--text-muted); }
+    .tcard.tg .t-n { color: var(--green-text); }
+    .t-denom { font-family: var(--pu-font-sans); font-size: 0.75rem; color: var(--text-muted); }
     .tcard-bar-wrap { height: 3px; background: var(--border-rule); border-radius: 2px; overflow: hidden; margin-bottom: 6px; }
     .tcard-bar {
       height: 100%; border-radius: 2px;
@@ -505,12 +518,12 @@
     .tcard-bar.by { background: var(--yellow); }
     .tcard-bar.bg { background: var(--green); }
     .tcard-stat {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.55rem;
+      font-family: var(--pu-font-sans);
+      font-size: 0.68rem;
       color: var(--text-muted);
       letter-spacing: 0.05em;
     }
-    .tcard.tg .tcard-stat { color: var(--green); }
+    .tcard.tg .tcard-stat { color: var(--green-text); }
     .tcard-check {
       position: absolute;
       top: 9px; right: 9px;
@@ -524,14 +537,14 @@
       transform: scale(0.4);
       transition: opacity 0.3s, transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
     }
-    .tcard-check i { font-size: 0.52rem; color: white; }
+    .tcard-check i { font-size: 0.65rem; color: white; }
     .tcard.tg .tcard-check { opacity: 1; transform: scale(1); }
 
     .tcard-total { background: var(--bg-tint); margin-top: 2px; }
     .tcard-total.tg { background: rgba(39,174,96,0.05); border-color: rgba(39,174,96,0.35); }
 
     .btn-print {
-      font-family: 'Barlow Condensed', sans-serif;
+      font-family: var(--pu-font-sans-xcd);
       font-size: 0.85rem;
       font-weight: 600;
       letter-spacing: 0.08em;
@@ -556,8 +569,8 @@
     .btn-print.ready:hover { background: var(--pu-aged); color: var(--pu-white); }
 
     .btn-reset {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.62rem;
+      font-family: var(--pu-font-sans);
+      font-size: 0.75rem;
       letter-spacing: 0.05em;
       padding: 7px 14px;
       background: transparent;
@@ -570,6 +583,45 @@
     }
     .btn-reset:hover { color: var(--text-main); border-color: var(--pu-aged); }
 
+    /* ── Semester Filter Bar ──────────────────────────────────────── */
+    #sem-filter-bar {
+      display: none;          /* shown by JS once data loads with >1 semester */
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 14px 0 16px;
+      margin-bottom: 8px;
+      border-bottom: 1px solid var(--border-rule);
+    }
+    .sem-filter-label {
+      font-family: var(--pu-font-sans);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .sem-filter-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+    .sem-pill {
+      font-family: var(--pu-font-sans);
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      padding: 4px 12px;
+      border-radius: 2px;
+      border: 1px solid var(--border-soft);
+      background: var(--bg-panel);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: border-color 0.18s, color 0.18s, background 0.18s;
+      white-space: nowrap;
+    }
+    .sem-pill:hover:not(.active) { border-color: var(--pu-aged); color: var(--pu-aged); }
+    .sem-pill.active {
+      background: var(--pu-black);
+      color: var(--pu-gold);
+      border-color: var(--pu-black);
+    }
+
     /* ── Mobile action buttons (shown below section 06 at ≤960px) ─ */
     #mobile-actions { display: none; }
 
@@ -578,26 +630,26 @@
     @media print {
       #tracker, .page-wrapper, .hero-banner { display: none !important; }
       #print-summary { display: block !important; }
-      body { background:#fff !important; color:#000 !important; font-family:'Barlow',Arial,sans-serif; font-size:10pt; }
+      body { background:#fff !important; color:#000 !important; font-family: var(--pu-font-sans); font-size:10pt; }
       .ps-hdr { padding-bottom:14pt; margin-bottom:18pt; border-bottom:3pt solid #CFB991; }
       .ps-inst { font-size:7pt; letter-spacing:0.25em; text-transform:uppercase; color:#8E6F3E; margin-bottom:4pt; }
       .ps-prog { font-size:22pt; font-weight:700; letter-spacing:-0.01em; color:#000; line-height:1.05; }
       .ps-prog span { color:#8E6F3E; }
       .ps-meta { margin-top:7pt; display:flex; justify-content:space-between; align-items:flex-end; }
       .ps-doctype { font-size:10pt; font-weight:600; letter-spacing:0.05em; text-transform:uppercase; color:#555960; }
-      .ps-date { font-family:monospace; font-size:7pt; color:#9D9795; }
+      .ps-date { font-family: var(--pu-font-sans); font-size:7pt; color:#9D9795; }
       .ps-sec { margin-bottom:14pt; break-inside:avoid; }
       .ps-sec-ttl { font-size:9pt; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#000; padding-bottom:4pt; border-bottom:1pt solid #CFB991; margin-bottom:7pt; display:flex; justify-content:space-between; align-items:baseline; }
-      .ps-cr { font-family:monospace; font-size:7pt; color:#8E6F3E; font-weight:normal; text-transform:none; }
+      .ps-cr { font-family: var(--pu-font-sans); font-size:7pt; color:#8E6F3E; font-weight:normal; text-transform:none; }
       .ps-tbl { width:100%; border-collapse:collapse; font-size:9pt; }
-      .ps-tbl th { font-family:monospace; font-size:6.5pt; letter-spacing:0.1em; text-transform:uppercase; color:#9D9795; padding:2pt 5pt; border-bottom:1pt solid #DDB945; text-align:left; }
+      .ps-tbl th { font-family: var(--pu-font-sans); font-size:6.5pt; letter-spacing:0.1em; text-transform:uppercase; color:#9D9795; padding:2pt 5pt; border-bottom:1pt solid #DDB945; text-align:left; }
       .ps-tbl td { padding:4pt 5pt; border-bottom:0.5pt solid #f0f0f0; }
-      .ps-tbl td.tc { font-family:monospace; font-size:7.5pt; color:#8E6F3E; white-space:nowrap; }
-      .ps-tbl td.cr { text-align:right; white-space:nowrap; font-family:monospace; font-size:7.5pt; color:#555960; }
+      .ps-tbl td.tc { font-family: var(--pu-font-sans); font-size:7.5pt; color:#8E6F3E; white-space:nowrap; }
+      .ps-tbl td.cr { text-align:right; white-space:nowrap; font-family: var(--pu-font-sans); font-size:7.5pt; color:#555960; }
       .ps-totals { margin-top:18pt; padding-top:10pt; border-top:2pt solid #CFB991; display:flex; justify-content:space-between; align-items:baseline; break-inside:avoid; }
       .ps-tot-lbl { font-size:10pt; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; }
       .ps-tot-val { font-size:15pt; font-weight:700; color:#8E6F3E; }
-      .ps-footer { margin-top:24pt; padding-top:7pt; border-top:0.5pt solid #ddd; font-family:monospace; font-size:6.5pt; color:#9D9795; display:flex; justify-content:space-between; }
+      .ps-footer { margin-top:24pt; padding-top:7pt; border-top:0.5pt solid #ddd; font-family: var(--pu-font-sans); font-size:6.5pt; color:#9D9795; display:flex; justify-content:space-between; }
     }
 
     /* ── Responsive ────────────────────────────────────────── */
@@ -606,7 +658,7 @@
       grid-column: 1 / -1;
       padding: 28px 18px;
       text-align: center;
-      font-family: 'Space Mono', monospace;
+      font-family: var(--pu-font-sans);
       font-size: 0.68rem;
       letter-spacing: 0.06em;
       color: var(--text-muted);
@@ -636,7 +688,7 @@
     }
     .course-error-msg .err-body { flex: 1; }
     .course-error-msg .err-title {
-      font-family: 'Barlow Condensed', sans-serif;
+      font-family: var(--pu-font-sans-xcd);
       font-size: 0.95rem;
       font-weight: 600;
       letter-spacing: 0.04em;
@@ -719,7 +771,7 @@
 <div id="print-summary">
   <div class="ps-hdr">
     <div class="ps-inst">Purdue University · College of Engineering</div>
-    <div class="ps-prog">Springer Engineering <span>Business Experience</span></div>
+    <div class="ps-prog">Engineering <span>Business Experience</span></div>
     <div class="ps-meta">
       <div class="ps-doctype">Plan of Study</div>
       <div class="ps-date" id="ps-date"></div>
@@ -731,7 +783,7 @@
     <div class="ps-tot-val" id="ps-tot-val">0 cr</div>
   </div>
   <div class="ps-footer">
-    <span>Purdue University · Springer Engineering Business Experience Certificate</span>
+    <span>Purdue University · Engineering Business Experience Certificate</span>
     <span id="ps-footer-date"></span>
   </div>
 </div>
@@ -740,7 +792,7 @@
 <div class="hero-banner">
   <div class="hero-inner">
     <div class="hero-overline">Purdue University · College of Engineering</div>
-    <h1 class="hero-title">Springer Engineering<br><span>Business Experience</span></h1>
+    <h1 class="hero-title">Engineering<br><span>Business Experience</span></h1>
     <p class="hero-sub">Select your courses for each requirement below. Your progress is tracked in real time in the sidebar.</p>
     <div class="req-pills">
       <div class="req-pill"><strong>2 cr</strong>&nbsp; Executive Forum</div>
@@ -826,7 +878,7 @@
     <div class="tcard-stat" id="tst-total">Complete all sections</div>
   </div>
 
-  <button class="btn-print" id="btn-print" onclick="doPrint()">
+  <button class="btn-print" id="btn-print" disabled onclick="doPrint()">
     <i class="bi bi-printer"></i> Print My Plan
   </button>
   <button class="btn-reset" onclick="doReset()">
@@ -836,12 +888,18 @@
 
 <div class="page-wrapper">
 
+  <!-- Semester Filter Bar — built dynamically after course data loads -->
+  <div id="sem-filter-bar">
+    <span class="sem-filter-label">Semester</span>
+    <div class="sem-filter-pills" id="sem-pills"></div>
+  </div>
+
   <!-- 01 Executive Forum -->
   <div class="cert-section is-complete" id="s-forum">
     <div class="section-header" onclick="toggleSec('s-forum')">
       <span class="section-num">01 -</span>
       <div class="section-title-wrap">
-        <div class="section-title">Springer Engineering Executive Forum</div>
+        <div class="section-title">Engineering Executive Forum</div>
         <div class="section-subtitle">Required &middot; 2 credits</div>
       </div>
       <div class="section-chip chip-req"><span class="chip-dot"></span>Required</div>
@@ -851,22 +909,7 @@
       <div class="section-instruction">
         This course is <span class="target">required</span> for all certificate students and is automatically included in your plan.
       </div>
-      <div class="cards-grid">
-        <div class="course-card card-required">
-          <div class="card-radio"></div>
-          <div class="card-req-badge">Required</div>
-          <div class="card-id">ENGR 30301</div>
-          <div class="card-name">Springer Engineering Executive Forum</div>
-          <div class="card-meta">
-            <span class="cbadge cb-credits">2 Credits</span>
-            <span class="cbadge cb-fall">Fall 2026</span>
-            <span class="cbadge cb-spring">Spring 2027</span>
-            <span class="cbadge cb-prof">Professor TBD</span>
-          </div>
-          <p class="card-desc collapsed" id="desc-forum">A bi-weekly forum where accomplished engineering alumni - now executives across tech, finance, consulting, and more - share the real story behind their careers. Candid conversations, in-class market simulations, and direct engagement with leaders who have made the jump from engineering to business. You'll leave able to read financial statements, identify executive career pathways, and ask sharper questions about decisions and tradeoffs.</p>
-          <button class="card-toggle" onclick="event.stopPropagation(); toggleDesc('desc-forum', this)">Read more</button>
-        </div>
-      </div>
+      <div class="cards-grid" id="grid-gateway"><div class="course-load-placeholder"></div></div>
     </div>
   </div>
 
@@ -977,7 +1020,7 @@
 
   <!-- Mobile-only action buttons — hidden at desktop, shown at ≤960px -->
   <div id="mobile-actions">
-    <button class="btn-print" onclick="doPrint()">
+    <button class="btn-print" disabled onclick="doPrint()">
       <i class="bi bi-printer"></i> Print My Plan
     </button>
     <button class="btn-reset" onclick="doReset()">
@@ -993,13 +1036,14 @@
 // found / comm / biz are populated at runtime from course-data.js.
 // comp is hardcoded here - update directly in this file if needed.
 const DATA = {
+  gateway: [],
   found: [],
   comm:  [],
   biz:   [],
   comp: [
     { id:'OPP 14100', name:'Competition or Challenge',                   prof:'', credits:0, sem:'Any semester',
       desc:'Participate in at least one approved, time-compressed, team-based competition. Complete a pre-experience goal-setting survey and a post-experience reflection by taking the 0-credit OPP 14100. Approved options include the Burton D. Morgan Venture Concept Competition, PowerShift Case Competition, Data 4 Good Case Competition, Big Ten Case Competition, Midwest Entrepreneurship Case Competition, and other approved innovation or pitch competitions.' },
-    { id:'OPP 34999', name:'Springer Engineering Business Internship',   prof:'', credits:0, sem:'Any semester',
+    { id:'OPP 34999', name:'Engineering Business Internship',   prof:'', credits:0, sem:'Any semester',
       desc:'Satisfy the requirement for a Competition or Challenge by taking on an approved startup, co-op, or industry leadership placement or role. Must take 0-credit OPP 34999 and submit reflection as well as supervisor\'s assessment.' }
   ]
 };
@@ -1023,7 +1067,7 @@ function renderGrid(cat) {
     const desc = `desc-${uid}`;
     const prof = c.prof ? `<span class="cbadge cb-prof"><i class="bi bi-person" style="margin-right:3px"></i>${c.prof}</span>` : '';
     return `
-      <div class="course-card" id="${uid}" data-cat="${cat}" data-i="${i}" onclick="selectCard('${cat}',${i})">
+      <div class="course-card" id="${uid}" data-cat="${cat}" data-i="${i}" data-sem="${c.sem}" onclick="selectCard('${cat}',${i})">
         <div class="card-radio"></div>
         <div class="card-id">${c.id}</div>
         <div class="card-name">${c.name}</div>
@@ -1036,6 +1080,51 @@ function renderGrid(cat) {
         <button class="card-toggle" onclick="event.stopPropagation();toggleDesc('${desc}',this)">Read more</button>
       </div>`;
   }).join('');
+}
+
+/* ── RENDER GATEWAY (Section 01 — required course) ───────────── */
+function renderGateway() {
+  var container = document.getElementById('grid-gateway');
+  if (!container) return;
+
+  // Graceful fallback if gateway data is absent (e.g. old course-data.js)
+  if (!DATA.gateway || DATA.gateway.length === 0) {
+    container.innerHTML =
+      '<div class="course-card card-required">' +
+        '<div class="card-radio"></div>' +
+        '<div class="card-req-badge">Required</div>' +
+        '<div class="card-id">ENGR 30301</div>' +
+        '<div class="card-name">Engineering Executive Forum</div>' +
+        '<div class="card-meta"><span class="cbadge cb-credits">2 Credits</span>' +
+        '<span class="cbadge cb-anytime">See advisor for current semesters</span></div>' +
+      '</div>';
+    return;
+  }
+
+  // Use first entry for metadata; collect all unique sem values for badges
+  var base = DATA.gateway[0];
+  var sems = DATA.gateway.reduce(function(acc, c) {
+    if (c.sem && acc.indexOf(c.sem) === -1) acc.push(c.sem);
+    return acc;
+  }, []);
+  var semBadges = sems.map(function(s) { return semBadge(s); }).join('');
+  var prof = base.prof
+    ? '<span class="cbadge cb-prof"><i class="bi bi-person" style="margin-right:3px"></i>' + base.prof + '</span>'
+    : '';
+
+  container.innerHTML =
+    '<div class="course-card card-required">' +
+      '<div class="card-radio"></div>' +
+      '<div class="card-req-badge">Required</div>' +
+      '<div class="card-id">' + base.id + '</div>' +
+      '<div class="card-name">' + base.name + '</div>' +
+      '<div class="card-meta">' +
+        '<span class="cbadge cb-credits">' + base.credits + ' Credits</span>' +
+        semBadges + prof +
+      '</div>' +
+      '<p class="card-desc collapsed" id="desc-forum">' + base.desc + '</p>' +
+      '<button class="card-toggle" onclick="event.stopPropagation();toggleDesc(\'desc-forum\',this)">Read more</button>' +
+    '</div>';
 }
 
 /* ── COLLAPSE ─────────────────────────────────────────────────── */
@@ -1143,6 +1232,7 @@ function updateTotal() {
 
   document.querySelectorAll('.btn-print').forEach(function(btn) {
     btn.classList.toggle('ready', !!allMet);
+    btn.disabled = !allMet;  /* semantic disabled state — also exempts from contrast checks */
   });
 
   // comp tracker
@@ -1183,7 +1273,7 @@ function doPrint() {
   document.getElementById('ps-footer-date').textContent = d;
 
   const rows = [
-    { lbl:'01 - Executive Practice & Industry Insight',      item:{ id:'ENGR 30301', name:'Springer Engineering Executive Forum',  credits:2 } },
+    { lbl:'01 - Executive Practice & Industry Insight',      item:{ id:'ENGR 30301', name:'Engineering Executive Forum',  credits:2 } },
     { lbl:'02 - Business of Engineering Foundational Logic', item:sel.found },
     { lbl:'03 - Communicating & Leading Self and Teams',     item:sel.comm  },
     { lbl:'04 - Making the Business Case',                   item:sel.biz   },
@@ -1214,6 +1304,7 @@ function doReset() {
   document.getElementById('ack-check').checked = false;
   document.getElementById('ack-block').classList.remove('ack-done');
   ['found','comm','biz','comp'].forEach(cat => renderGrid(cat));
+  applySemFilter('all');   // reset filter to All and re-show any hidden cards
   ['found','comm','biz','comp','port'].forEach(cat => {
     const chip = document.getElementById(CHIP_IDS[cat]);
     const sec  = document.getElementById(SEC_IDS[cat]);
@@ -1230,7 +1321,62 @@ function doReset() {
   bar.style.width = '20%'; bar.className = 'tcard-bar by';
   document.getElementById('tn-total').textContent  = '2';
   document.getElementById('tst-total').textContent = 'Complete all sections';
-  document.querySelectorAll('.btn-print').forEach(function(btn) { btn.classList.remove('ready'); });
+  document.querySelectorAll('.btn-print').forEach(function(btn) { btn.classList.remove('ready'); btn.disabled = true; });
+}
+
+/* ── SEMESTER FILTER ─────────────────────────────────────────── */
+var currentSemFilter = 'all';
+
+function buildSemFilter() {
+  // Collect unique sem values from all dynamic sections
+  var sems = [];
+  ['found','comm','biz'].forEach(function(cat) {
+    DATA[cat].forEach(function(c) {
+      if (c.sem && sems.indexOf(c.sem) === -1) sems.push(c.sem);
+    });
+  });
+
+  var bar = document.getElementById('sem-filter-bar');
+
+  // Only show the bar when there are two or more distinct semesters
+  if (sems.length <= 1) { bar.style.display = 'none'; return; }
+
+  // Sort chronologically: by year first, then Fall (0) before Spring (1)
+  sems.sort(function(a, b) {
+    var parse = function(s) {
+      var m = s.match(/(\w+)\s+(\d+)/);
+      if (!m) return [9999, 9];
+      return [parseInt(m[2]), /fall/i.test(m[1]) ? 0 : /spring/i.test(m[1]) ? 1 : 2];
+    };
+    var pa = parse(a), pb = parse(b);
+    return pa[0] !== pb[0] ? pa[0] - pb[0] : pa[1] - pb[1];
+  });
+
+  // Build pills: All + one per semester
+  var html = '<button class="sem-pill active" data-sem="all" onclick="applySemFilter(\'all\')">All</button>';
+  sems.forEach(function(sem) {
+    html += '<button class="sem-pill" data-sem="' + sem + '" onclick="applySemFilter(\'' + sem + '\')">' + sem + '</button>';
+  });
+  document.getElementById('sem-pills').innerHTML = html;
+  bar.style.display = 'flex';
+}
+
+function applySemFilter(sem) {
+  currentSemFilter = sem;
+
+  // Sync pill active states
+  document.querySelectorAll('.sem-pill').forEach(function(pill) {
+    pill.classList.toggle('active', pill.dataset.sem === sem);
+  });
+
+  // Show/hide cards in dynamic sections — selection state is untouched
+  ['found','comm','biz'].forEach(function(cat) {
+    var grid = document.getElementById('grid-' + cat);
+    if (!grid) return;
+    grid.querySelectorAll('.course-card').forEach(function(card) {
+      card.style.display = (sem === 'all' || card.dataset.sem === sem) ? '' : 'none';
+    });
+  });
 }
 
 /* ── COURSE DATA LOADER ───────────────────────────────────────── */
@@ -1250,7 +1396,7 @@ function showCourseError() {
       '<div class="err-body">' +
         '<div class="err-title">Course data temporarily unavailable</div>' +
         '<p class="err-text">We\'re sorry - the course selector is temporarily unavailable. ' +
-        'Please check back soon, or contact the Springer Engineering Business Experience ' +
+        'Please check back soon, or contact the Engineering Business Experience ' +
         'office for assistance with course selection.</p>' +
       '</div>' +
     '</div>';
@@ -1265,10 +1411,13 @@ function initWithCourseData() {
     showCourseError();
     return;
   }
-  DATA.found = COURSE_DATA.found;
-  DATA.comm  = COURSE_DATA.comm;
-  DATA.biz   = COURSE_DATA.biz;
+  DATA.gateway = Array.isArray(COURSE_DATA.gateway) ? COURSE_DATA.gateway : [];
+  DATA.found   = COURSE_DATA.found;
+  DATA.comm    = COURSE_DATA.comm;
+  DATA.biz     = COURSE_DATA.biz;
+  renderGateway();
   ['found','comm','biz'].forEach(function(cat) { renderGrid(cat); });
+  buildSemFilter();
 }
 
 /* ── INIT ─────────────────────────────────────────────────────── */
